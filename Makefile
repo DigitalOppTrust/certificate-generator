@@ -8,4 +8,4 @@ down:
 
 .PHONY: in
 in:
-	docker exec -it certificate-generator-1 /bin/bash
+	docker exec -it certificate-generator-certificate-generator-1 /bin/bash
