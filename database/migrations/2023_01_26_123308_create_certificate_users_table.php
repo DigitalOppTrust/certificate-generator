@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('certificate_users', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->integer('user_id');
             $table->integer('certificate_id');
             $table->timestamps();

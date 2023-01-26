@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->integer('user_id');
             $table->string('name')->unique();
             $table->timestamps();

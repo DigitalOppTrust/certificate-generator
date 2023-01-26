@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
 use App\Models\Certificate;
+use Illuminate\Http\Client\Request;
+use Inertia\Inertia;
 
 class CertificateController extends Controller
 {
@@ -34,9 +36,17 @@ class CertificateController extends Controller
      * @param  \App\Http\Requests\StoreCertificateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCertificateRequest $request)
+    public function upsert(Certificate $certificate = null)
     {
-        //
+        if (!$certificate) {
+            $certificate = new Certificate();
+        }
+
+        $certificate->user_id = auth()->user()->id;
+        $certificate->name = request('name');
+        $certificate->save();
+
+        return redirect()->route('certificate.upsert', ['certificate' => $certificate]);
     }
 
     /**
@@ -47,7 +57,9 @@ class CertificateController extends Controller
      */
     public function show(Certificate $certificate)
     {
-        //
+        return Inertia::render('Certificate', [
+            'certificate' => $certificate,
+        ]);
     }
 
     /**

@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->integer('user_id');
-            $table->string('title');
-            $table->text('html');
+            $table->string('name');
+            $table->text('html')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

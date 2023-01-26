@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ShortUniqueUuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Certificate extends Model
 {
-    use HasFactory;
+    use HasFactory, ShortUniqueUuidTrait, SoftDeletes;
 
     public function issuances()
     {
@@ -32,5 +34,10 @@ class Certificate extends Model
     public function fields()
     {
         return $this->hasMany(CertificateField::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }
