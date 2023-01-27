@@ -3,8 +3,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { Head, useForm, usePage } from "@inertiajs/vue3";
+import { Head, useForm, usePage, Link } from "@inertiajs/vue3";
 
 const form = useForm({
     uuid: "",
@@ -12,6 +13,7 @@ const form = useForm({
 });
 
 const certificate = usePage().props.certificate.valueOf();
+
 if (certificate) {
     form.uuid = certificate.uuid;
     form.name = certificate.name;
@@ -35,21 +37,21 @@ const submit = () => {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Certificate
+                Certificate - {{ certificate.name }}
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <form @submit.prevent="submit">
+                    <form @submit.prevent="submit" class="mb-5">
                         <div class="p-5">
-                            <InputLabel for="name" value="Name" />
+                            <InputLabel for="name" value="Name" class="mb-2" />
 
                             <TextInput
                                 id="name"
                                 type="text"
-                                class="mt-1 block w-full"
+                                class="mb-2 block w-full"
                                 v-model="form.name"
                                 required
                                 autofocus
@@ -57,7 +59,7 @@ const submit = () => {
                             />
 
                             <InputError
-                                class="mt-2"
+                                class="mt-1 mb-2"
                                 :message="form.errors.name"
                             />
                             <PrimaryButton
@@ -68,6 +70,17 @@ const submit = () => {
                             </PrimaryButton>
                         </div>
                     </form>
+
+                    <Link
+                        v-if="certificate.uuid"
+                        :href="
+                            route('certificate.builder', {
+                                uuid: form.uuid,
+                            })
+                        "
+                        class="text-sm text-gray-700 dark:text-gray-500 underline p-5"
+                        >Certificate Builder</Link
+                    >
                 </div>
             </div>
         </div>

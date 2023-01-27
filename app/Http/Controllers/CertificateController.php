@@ -57,10 +57,34 @@ class CertificateController extends Controller
      */
     public function show(Certificate $certificate)
     {
-        return Inertia::render('Certificate', [
+        return Inertia::render('Certificate/Setup', [
             'certificate' => $certificate,
         ]);
     }
+
+    public function showBuilder(Certificate $certificate)
+    {
+        return Inertia::render('Certificate/Builder', [
+            'certificate' => $certificate,
+        ]);
+    }
+
+    public function showPreview(Certificate $certificate)
+    {
+        return Inertia::render('Certificate/Preview', [
+            'certificate' => $certificate,
+        ]);
+    }
+
+    public function builderUpdate(Certificate $certificate)
+    {
+        $certificate->html = request('html');
+        $certificate->save();
+
+        return redirect()->route('certificate.builder', ['certificate' => $certificate]);
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

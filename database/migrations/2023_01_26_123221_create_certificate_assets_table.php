@@ -18,8 +18,9 @@ return new class extends Migration
             $table->uuid();
             $table->integer('user_id');
             $table->integer('certificate_id');
-            $table->string('asset_location');
+            $table->string('path');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

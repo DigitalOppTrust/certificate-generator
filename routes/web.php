@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CertificateAssetController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -31,6 +32,9 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/certificate/upsert/{certificate?}', [CertificateController::class, 'show'])->middleware(['auth', 'verified'])->name('certificate.upsert');
+Route::get('/certificate/{certificate}/builder', [CertificateController::class, 'showBuilder'])->middleware(['auth', 'verified'])->name('certificate.builder');
+Route::get('/certificate/{certificate}/preview', [CertificateController::class, 'showPreview'])->middleware(['auth', 'verified'])->name('certificate.preview');
+Route::get('/certificate/{certificate}/assets', [CertificateAssetController::class, 'show'])->middleware(['auth', 'verified'])->name('certificate.assets');
 
 
 
@@ -40,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/certificate/upsert/{certificate?}', [CertificateController::class, 'upsert'])->name('certificate.upsert');
+    Route::post('/certificate/{certificate}/builder/', [CertificateController::class, 'builderUpdate'])->name('certificate.builder.update');
+    Route::post('/certificate/{certificate}/asset/add', [CertificateAssetController::class, 'store'])->name('certificate.asset.add');
+    Route::delete('/certificate/asset/{asset}/delete', [CertificateAssetController::class, 'delete'])->name('certificate.asset.delete');
 });
 
 require __DIR__ . '/auth.php';

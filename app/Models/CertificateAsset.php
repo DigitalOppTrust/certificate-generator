@@ -11,8 +11,19 @@ class CertificateAsset extends Model
 {
     use HasFactory, ShortUniqueUuidTrait, SoftDeletes;
 
+    protected $fillable = [
+        'user_id',
+        'certificate_id',
+        'path',
+    ];
+
     public function certificate()
     {
         return $this->belongsTo(Certificate::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }
