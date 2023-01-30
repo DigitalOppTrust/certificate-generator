@@ -11,6 +11,14 @@ class CertificateUser extends Model
 {
     use HasFactory, ShortUniqueUuidTrait, SoftDeletes;
 
+    protected $fillable = [
+        'user_id',
+        'certificate_id',
+        'uuid',
+        'status',
+        'expires_at',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

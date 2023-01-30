@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CertificateAssetController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\CertificateUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Certificate;
@@ -33,12 +34,15 @@ Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['aut
 
 Route::get('/certificate/upsert/{certificate?}', [CertificateController::class, 'show'])->middleware(['auth', 'verified'])->name('certificate.upsert');
 Route::get('/certificate/{certificate}/builder', [CertificateController::class, 'showBuilder'])->middleware(['auth', 'verified'])->name('certificate.builder');
-Route::get('/certificate/{certificate}/preview', [CertificateController::class, 'showPreview'])->middleware(['auth', 'verified'])->name('certificate.preview');
+Route::get('/certificate/{certificate}/preview/{user?}', [CertificateController::class, 'showPreview'])->middleware(['auth', 'verified'])->name('certificate.preview');
 Route::get('/certificate/{certificate}/assets', [CertificateAssetController::class, 'show'])->middleware(['auth', 'verified'])->name('certificate.assets');
 
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('/certificate/{certificate}/users', [CertificateUserController::class, 'show'])->middleware(['auth', 'verified'])->name('certificate.users');
+    Route::post('/certificate/{certificate}/users/addcsv', [CertificateUserController::class, 'store'])->name('certificate.users.addcsv');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
 use App\Models\Certificate;
+use App\Models\User;
 use Illuminate\Http\Client\Request;
 use Inertia\Inertia;
 
@@ -69,11 +70,21 @@ class CertificateController extends Controller
         ]);
     }
 
-    public function showPreview(Certificate $certificate)
+    public function showPreview(Certificate $certificate, User $user = null)
     {
-        return Inertia::render('Certificate/Preview', [
-            'certificate' => $certificate,
-        ]);
+        if (!$user) {
+            $user = auth()->user();
+        }
+
+        $search = [
+            '{{firstname}}',
+            '{{lastname}}',
+        ];
+        $replace = [
+            $user->firstname,
+            $user->lastname,
+        ];
+        return str_replace($search, $replace, $certificate->html);
     }
 
     public function builderUpdate(Certificate $certificate)

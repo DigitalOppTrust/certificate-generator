@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('certificate_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

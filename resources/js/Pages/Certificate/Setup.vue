@@ -25,6 +25,11 @@ const submit = () => {
             uuid: form.uuid,
         }),
         {
+            onFinish: (response) => {
+                // Force a reload
+                window.location.reload();
+            },
+
             // onFinish: () => form.reset('password', 'password_confirmation'),
         }
     );
@@ -75,11 +80,21 @@ const submit = () => {
                         v-if="certificate.uuid"
                         :href="
                             route('certificate.builder', {
-                                uuid: form.uuid,
+                                certificate: form.uuid,
                             })
                         "
                         class="text-sm text-gray-700 dark:text-gray-500 underline p-5"
                         >Certificate Builder</Link
+                    >
+                    <Link
+                        v-if="certificate.uuid"
+                        :href="
+                            route('certificate.users', {
+                                certificate: form.uuid,
+                            })
+                        "
+                        class="text-sm text-gray-700 dark:text-gray-500 underline p-5"
+                        >Certificate Users</Link
                     >
                 </div>
             </div>

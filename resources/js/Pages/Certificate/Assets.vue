@@ -64,30 +64,66 @@ const deleteAsset = (uuid) => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div
+                    class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5"
+                >
                     <form @submit.prevent="submit" class="mb-5">
                         <div class="p-5"></div>
-                        <ImageUploader @upload="addAsset" label="Add Asset" />
+                        <ImageUploader
+                            @upload="addAsset"
+                            label="Add Asset"
+                            class="mb-5"
+                        />
                         <div
                             v-for="asset in certificate.assets"
                             :key="asset.uuid"
                         >
-                            <img
-                                :src="'/storage/' + asset.path"
-                                :alt="asset.name"
-                                width="100"
-                                height="100"
-                                class="mr-2"
-                            />
-                            <PrimaryButton
-                                @click="deleteAsset(asset.uuid)"
-                                class="text-red-500"
-                                >Delete Asset</PrimaryButton
-                            >
+                            <div class="flex">
+                                <div>
+                                    <a
+                                        :href="'/storage/' + asset.path"
+                                        target="_blank"
+                                    >
+                                        <img
+                                            :src="'/storage/' + asset.path"
+                                            :alt="asset.name"
+                                            width="100"
+                                            height="100"
+                                            class="mr-2"
+                                        />
+                                    </a>
+                                </div>
+                                <div>
+                                    <PrimaryButton
+                                        @click="deleteAsset(asset.uuid)"
+                                        class=""
+                                        >Delete Asset</PrimaryButton
+                                    >
+                                </div>
+                            </div>
                         </div>
                     </form>
+                    <div v-if="certificate.uuid">
+                        <Link
+                            :href="
+                                route('certificate.builder', {
+                                    uuid: form.uuid,
+                                })
+                            "
+                            class="text-sm text-gray-700 dark:text-gray-500 underline p-5"
+                            >Certificate Builder</Link
+                        >
+                        <Link
+                            :href="
+                                route('certificate.upsert', {
+                                    uuid: form.uuid,
+                                })
+                            "
+                            class="text-sm text-gray-700 dark:text-gray-500 underline p-5"
+                            >Certificate Setup</Link
+                        >
+                    </div>
                 </div>
-                {{ certificate.assets }}
             </div>
         </div>
     </AuthenticatedLayout>

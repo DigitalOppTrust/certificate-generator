@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Certificate::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 }

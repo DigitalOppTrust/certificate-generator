@@ -47,7 +47,7 @@ const submit = () => {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto p-5">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <form @submit.prevent="submit">
                         <div class="p-5">
@@ -60,6 +60,7 @@ const submit = () => {
                                 v-model="form.html"
                                 required
                             />
+                            <div v-pre>{{ firstname }}, {{ lastname }}</div>
 
                             <InputError
                                 class="mt-1 mb-2"
@@ -85,6 +86,27 @@ const submit = () => {
                             class="text-sm text-gray-700 dark:text-gray-500 underline p-5"
                             >Certificate Assets</Link
                         >
+
+                        <div
+                            v-for="asset in certificate.assets"
+                            :key="asset.uuid"
+                        >
+                            <div class="flex">
+                                <div>
+                                    <a
+                                        :href="'/storage/' + asset.path"
+                                        target="_blank"
+                                    >
+                                        <img
+                                            :src="'/storage/' + asset.path"
+                                            :alt="asset.name"
+                                            width="100"
+                                            class="mr-2"
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>

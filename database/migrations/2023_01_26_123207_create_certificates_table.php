@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid();
             $table->integer('user_id');
             $table->string('name');
-            $table->text('html')->nullable();
+            $table->longText('html')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

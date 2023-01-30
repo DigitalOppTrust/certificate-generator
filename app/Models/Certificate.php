@@ -18,7 +18,8 @@ class Certificate extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'certificate_user_id');
+        return $this->hasMany(CertificateUser::class);
+        // return $this->belongsToMany(User::class, 'certificate_user_id');
     }
 
     public function assets()
